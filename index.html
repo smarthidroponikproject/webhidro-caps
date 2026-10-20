@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Hidroponik Panel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Smart Hidroponik Panel</h1>
+        <div class="mode-switch">
+            <label>Mode Sistem:</label>
+            <select id="systemMode" onchange="changeMode()">
+                <option value="auto">Otomatis</option>
+                <option value="manual">Manual</option>
+            </select>
+        </div>
+    </header>
+
+    <main>
+        <section class="card">
+            <h2>Monitoring Sensor</h2>
+            <div class="grid-container">
+                <div class="sensor-box">
+                    <h3>pH Air</h3>
+                    <p id="valPH">0.0</p>
+                </div>
+                <div class="sensor-box">
+                    <h3>TDS Nutrisi</h3>
+                    <p id="valTDS">0 <small>ppm</small></p>
+                </div>
+                <div class="sensor-box">
+                    <h3>Suhu Air (DS18b20)</h3>
+                    <p id="valWaterTemp">0.0 <small>&deg;C</small></p>
+                </div>
+                <div class="sensor-box">
+                    <h3>Suhu Udara (DHT22)</h3>
+                    <p id="valAirTemp">0.0 <small>&deg;C</small></p>
+                </div>
+                <div class="sensor-box">
+                    <h3>Kelembapan (DHT22)</h3>
+                    <p id="valHum">0.0 <small>%</small></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card" id="manualControlPanel">
+            <h2>Kontrol Manual Aktuator</h2>
+            <p class="warning-text" id="modeWarning">Ubah ke mode "Manual" untuk menggunakan tombol di bawah.</p>
+            <div class="grid-container controls">
+                <button class="btn" id="btnAirBersih" onclick="toggleRelay('airBersih')" disabled>Pompa Air Bersih</button>
+                <button class="btn" id="btnPhUp" onclick="toggleRelay('phUp')" disabled>Pompa pH Up</button>
+                <button class="btn" id="btnPhDown" onclick="toggleRelay('phDown')" disabled>Pompa pH Down</button>
+                <button class="btn" id="btnNutAB" onclick="toggleRelay('nutAB')" disabled>Pompa Nutrisi AB</button>
+                <button class="btn" id="btnExhaust" onclick="toggleRelay('exhaust')" disabled>Kipas Exhaust</button>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Pengaturan Batas (Threshold) Otomatis</h2>
+            <div class="form-group">
+                <label>Batas pH Bawah & Atas:</label>
+                <input type="number" id="phMin" step="0.1" value="5.5" style="width:48%; display:inline-block;">
+                <input type="number" id="phMax" step="0.1" value="6.5" style="width:48%; display:inline-block; float:right;">
+            </div>
+            <div class="form-group">
+                <label>Batas TDS Bawah & Atas (ppm):</label>
+                <input type="number" id="tdsMin" value="800" style="width:48%; display:inline-block;">
+                <input type="number" id="tdsMax" value="1400" style="width:48%; display:inline-block; float:right;">
+            </div>
+            <div class="form-group">
+                <label>Batas Kelembapan Exhaust OFF & ON (%):</label>
+                <input type="number" id="humMin" step="1" value="70" style="width:48%; display:inline-block;">
+                <input type="number" id="humMax" step="1" value="80" style="width:48%; display:inline-block; float:right;">
+            </div>
+            <div class="form-group">
+                <label>Batas Suhu Exhaust ON (&deg;C):</label>
+                <input type="number" id="tempMax" step="0.1" value="30.0">
+            </div>
+            <button class="btn btn-save" onclick="saveThresholds()">Simpan Pengaturan</button>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
